@@ -76,11 +76,12 @@ int main(int argc, char **argv)
   
   tf2_ros::StaticTransformBroadcaster broadcaster;
   broadcaster.sendTransform(msgs);
-  for (const auto &msg : msgs)
+  typedef std::vector<geometry_msgs::TransformStamped>::const_iterator ConstIter;
+  for (ConstIter it = msgs.begin(); it != msgs.end(); ++it)
   {
     ROS_INFO("Publishing static transform from %s to %s.",
-             msg.header.frame_id.c_str(),
-             msg.child_frame_id.c_str());
+             it->header.frame_id.c_str(),
+             it->child_frame_id.c_str());
   }
   ros::spin();
   return 0;
